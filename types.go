@@ -16,3 +16,19 @@ type BlockHeader struct {
 	Timestamp  uint64
 	StateRoot  string // Merkle root of state (simplified)
 }
+// Transaction represents a basic Ethereum transaction.
+type Transaction struct {
+	From     string
+	To       string
+	Value    uint64
+	Data     []byte // For smart contracts
+	GasLimit uint64
+	Nonce    uint64
+}
+
+// Account represents a user/contract account.
+type Account struct {
+	Balance uint64
+	Nonce   uint64
+	Code    []byte // For smart contracts
+}
