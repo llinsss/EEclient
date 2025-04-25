@@ -54,3 +54,20 @@ func (bc *Blockchain) processTransactions(txs []Transaction) WorldState {
 		newState[tx.From] = sender
 		newState[tx.To] = receiver
 	}
+	return newState
+}
+
+// Helper functions
+func hashBlock(block Block) string {
+	bytes, _ := json.Marshal(block)
+	hash := sha256.Sum256(bytes)
+	return hex.EncodeToString(hash[:])
+}
+
+func copyWorldState(ws WorldState) WorldState {
+	newWs := make(WorldState)
+	for k, v := range ws {
+		newWs[k] = v
+	}
+	return newWs
+}
