@@ -17,3 +17,20 @@ func NewBlockchain() *Blockchain {
 		WorldState: make(WorldState),
 	}
 }
+// AddBlock processes transactions and adds a new block.
+func (bc *Blockchain) AddBlock(txs []Transaction) error {
+	lastBlock := bc.Blocks[len(bc.Blocks)-1]
+
+	// Process transactions (simplified)
+	newState := bc.processTransactions(txs)
+
+	// Create new block
+	newBlock := Block{
+		Header: BlockHeader{
+			ParentHash: hashBlock(lastBlock),
+			Number:     lastBlock.Header.Number + 1,
+			Timestamp:  uint64(time.Now().Unix()),
+			StateRoot:  "0x1", // In reality, compute Merkle root
+		},
+		Transactions: txs,
+	}
