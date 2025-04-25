@@ -34,3 +34,23 @@ func (bc *Blockchain) AddBlock(txs []Transaction) error {
 		},
 		Transactions: txs,
 	}
+	bc.Blocks = append(bc.Blocks, newBlock)
+	bc.WorldState = newState
+	return nil
+}
+
+// processTransactions updates the world state.
+func (bc *Blockchain) processTransactions(txs []Transaction) WorldState {
+	newState := copyWorldState(bc.WorldState)
+
+	for _, tx := range txs {
+		// Simplified: Just transfer value
+		sender := newState[tx.From]
+		receiver := newState[tx.To]
+
+		sender.Balance -= tx.Value
+		receiver.Balance += tx.Value
+
+		newState[tx.From] = sender
+		newState[tx.To] = receiver
+	}
