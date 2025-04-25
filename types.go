@@ -32,3 +32,18 @@ type Account struct {
 	Nonce   uint64
 	Code    []byte // For smart contracts
 }
+// WorldState tracks account balances (simplified).
+type WorldState map[string]Account
+
+// NewBlock creates a genesis block.
+func NewGenesisBlock() Block {
+	return Block{
+		Header: BlockHeader{
+			ParentHash: "0x0",
+			Number:     0,
+			Timestamp:  uint64(time.Now().Unix()),
+			StateRoot:  "0x0",
+		},
+		Transactions: []Transaction{},
+	}
+}
